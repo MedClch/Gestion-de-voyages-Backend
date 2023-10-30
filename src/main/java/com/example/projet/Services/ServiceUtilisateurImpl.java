@@ -5,6 +5,7 @@ import com.example.projet.Exceptions.DuplicateUsernameException;
 import com.example.projet.Exceptions.UserNotFoundException;
 import com.example.projet.Model.Utilisateur;
 import com.example.projet.Repositories.UtilisateurRepository;
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -49,6 +50,36 @@ public class ServiceUtilisateurImpl implements iServiceUtilisateur{
             user.setPassword(user.getPassword());
             return repository.save(user);
         }).orElseThrow(() -> new UserNotFoundException(id));
+    }
+
+    @Override
+    public Utilisateur registerUser(Utilisateur utilisateur) {
+        if (repository.findByUsername(utilisateur.getUsername()) != null)
+            throw new DuplicateUsernameException("Username is already taken");
+        if (repository.findByEmail(utilisateur.getEmail()) != null)
+            throw new DuplicateEmailException("Email is already registered");
+        String hashedPassword = hashPassword(utilisateur.getPassword());
+        utilisateur.setPassword(hashedPassword);
+        return repository.save(utilisateur);
+    }
+
+    @Override
+    public Utilisateur loginUser(String username, String password) {
+        Utilisateur user = repository.findByUsername(username);
+        if (user == null)
+            return null;
+        if (verifyPassword(password, user.getPassword()))
+            return user;
+        else
+            return null;
+    }
+
+    private String hashPassword(String password) {
+        return BCrypt.hashpw(password, BCrypt.gensalt());
+    }
+
+    private boolean verifyPassword(String password, String hashedPassword) {
+        return BCrypt.checkpw(password, hashedPassword);
     }
 
 }
