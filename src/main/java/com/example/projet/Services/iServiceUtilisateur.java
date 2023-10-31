@@ -10,6 +10,7 @@ public interface iServiceUtilisateur {
     List<Utilisateur> getAllUsers();
     Utilisateur getUserById(Long id);
     Utilisateur updateUser(Long id, Utilisateur newUser);
+    String deleteUser(Long id);
     Utilisateur registerUser(Utilisateur utilisateur);
     Utilisateur loginUser(String username, String password);
 

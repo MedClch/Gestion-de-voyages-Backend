@@ -47,9 +47,18 @@ public class ServiceUtilisateurImpl implements iServiceUtilisateur{
             user.setFullname(newUser.getFullname());
             user.setUsername(newUser.getUsername());
             user.setEmail(newUser.getEmail());
-            user.setPassword(user.getPassword());
+            user.setPassword(newUser.getPassword());
             return repository.save(user);
         }).orElseThrow(() -> new UserNotFoundException(id));
+    }
+
+    @Override
+    public String deleteUser(Long id) {
+        Utilisateur user = repository.findById(id).orElse(null);
+        if (user == null)
+            throw new UserNotFoundException(id);
+        repository.deleteById(id);
+        return "User with ID " + id + " has been deleted successfully!";
     }
 
     @Override
