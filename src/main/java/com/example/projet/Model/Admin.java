@@ -5,10 +5,10 @@ public class Admin extends Utilisateur {
 
     public Admin() {
         super();
-        setFullname("admin");
+        setFullname("Admin");
         setPassword("12345");
-        setUsername("Admin");
-        setEmail("Admin");
+        setUsername("admin");
+        setEmail("admin@admin.com");
     }
 
     public static Admin getInstance() {
