@@ -22,6 +22,7 @@ public class ServiceUtilisateurImpl implements iServiceUtilisateur{
             throw new DuplicateUsernameException("Username is already taken");
         if (repository.findByEmail(utilisateur.getEmail()) != null)
             throw new DuplicateEmailException("Email is already registered");
+        utilisateur.setPassword(hashPassword(utilisateur.getPassword()));
         return repository.save(utilisateur);
     }
 
@@ -47,7 +48,8 @@ public class ServiceUtilisateurImpl implements iServiceUtilisateur{
             user.setFullname(newUser.getFullname());
             user.setUsername(newUser.getUsername());
             user.setEmail(newUser.getEmail());
-            user.setPassword(newUser.getPassword());
+//            user.setPassword(newUser.getPassword());
+            user.setPassword(hashPassword(newUser.getPassword()));
             return repository.save(user);
         }).orElseThrow(() -> new UserNotFoundException(id));
     }
