@@ -14,73 +14,73 @@ import java.util.List;
 @Service
 public class ServiceClientImpl implements iServiceClient {
     @Autowired
-    private ClientRepository repository;
+    private ClientRepository clientRepository;
 
     @Override
     public Client saveClient(Client client) {
-        if (repository.findByUsername(client.getUsername()) != null)
+        if (clientRepository.findByUsername(client.getUsername()) != null)
             throw new DuplicateUsernameException("Username is already taken");
-        if (repository.findByEmail(client.getEmail()) != null)
+        if (clientRepository.findByEmail(client.getEmail()) != null)
             throw new DuplicateEmailException("Email is already registered");
         client.setPassword(hashPassword(client.getPassword()));
-        return repository.save(client);
+        return clientRepository.save(client);
     }
 
     @Override
     public List<Client> getAllClients() {
-        return repository.findAll();
+        return clientRepository.findAll();
     }
 
     @Override
     public Client getClientById(Long id) {
-        return repository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
+        return clientRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
     }
 
     @Override
     public Client updateClient(Long id, Client newUser) {
-        return repository.findById(id).map(user -> {
-            if (!user.getUsername().equals(newUser.getUsername()) &&
-                    repository.findByUsername(newUser.getUsername()) != null)
+        return clientRepository.findById(id).map(client -> {
+            if (!client.getUsername().equals(newUser.getUsername()) &&
+                    clientRepository.findByUsername(newUser.getUsername()) != null)
                 throw new DuplicateUsernameException("Username is already taken");
-            if (!user.getEmail().equals(newUser.getEmail()) &&
-                    repository.findByEmail(newUser.getEmail()) != null)
+            if (!client.getEmail().equals(newUser.getEmail()) &&
+                    clientRepository.findByEmail(newUser.getEmail()) != null)
                 throw new DuplicateEmailException("Email is already registered");
-            user.setFullname(newUser.getFullname());
-            user.setUsername(newUser.getUsername());
-            user.setEmail(newUser.getEmail());
+            client.setFullname(newUser.getFullname());
+            client.setUsername(newUser.getUsername());
+            client.setEmail(newUser.getEmail());
 //            user.setPassword(newUser.getPassword());
-            user.setPassword(hashPassword(newUser.getPassword()));
-            return repository.save(user);
+            client.setPassword(hashPassword(newUser.getPassword()));
+            return clientRepository.save(client);
         }).orElseThrow(() -> new UserNotFoundException(id));
     }
 
     @Override
     public String deleteClient(Long id) {
-        Client user = repository.findById(id).orElse(null);
-        if (user == null)
+        Client client = clientRepository.findById(id).orElse(null);
+        if (client == null)
             throw new UserNotFoundException(id);
-        repository.deleteById(id);
+        clientRepository.deleteById(id);
         return "User with ID " + id + " has been deleted successfully!";
     }
 
     @Override
     public Client registerClient(Client client) {
-        if (repository.findByUsername(client.getUsername()) != null)
+        if (clientRepository.findByUsername(client.getUsername()) != null)
             throw new DuplicateUsernameException("Username is already taken");
-        if (repository.findByEmail(client.getEmail()) != null)
+        if (clientRepository.findByEmail(client.getEmail()) != null)
             throw new DuplicateEmailException("Email is already registered");
         String hashedPassword = hashPassword(client.getPassword());
         client.setPassword(hashedPassword);
-        return repository.save(client);
+        return clientRepository.save(client);
     }
 
     @Override
     public Client loginClient(String username, String password) {
-        Client user = repository.findByUsername(username);
-        if (user == null)
+        Client client = clientRepository.findByUsername(username);
+        if (client == null)
             return null;
-        if (verifyPassword(password, user.getPassword()))
-            return user;
+        if (verifyPassword(password, client.getPassword()))
+            return client;
         else
             return null;
     }
