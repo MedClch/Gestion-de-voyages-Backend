@@ -1,4 +1,4 @@
-package com.example.projet.Services;
+package com.example.projet.Services.Clients;
 
 import com.example.projet.Exceptions.DuplicateEmailException;
 import com.example.projet.Exceptions.DuplicateUsernameException;

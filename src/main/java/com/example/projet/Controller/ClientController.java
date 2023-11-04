@@ -1,7 +1,7 @@
 package com.example.projet.Controller;
 
 import com.example.projet.Model.Client;
-import com.example.projet.Services.iServiceClient;
+import com.example.projet.Services.Clients.iServiceClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
