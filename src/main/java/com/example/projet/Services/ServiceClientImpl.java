@@ -3,8 +3,8 @@ package com.example.projet.Services;
 import com.example.projet.Exceptions.DuplicateEmailException;
 import com.example.projet.Exceptions.DuplicateUsernameException;
 import com.example.projet.Exceptions.UserNotFoundException;
-import com.example.projet.Model.Utilisateur;
-import com.example.projet.Repositories.UtilisateurRepository;
+import com.example.projet.Model.Client;
+import com.example.projet.Repositories.ClientRepository;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,32 +12,32 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ServiceUtilisateurImpl implements iServiceUtilisateur{
+public class ServiceClientImpl implements iServiceClient {
     @Autowired
-    private UtilisateurRepository repository;
+    private ClientRepository repository;
 
     @Override
-    public Utilisateur saveUser(Utilisateur utilisateur) {
-        if (repository.findByUsername(utilisateur.getUsername()) != null)
+    public Client saveClient(Client client) {
+        if (repository.findByUsername(client.getUsername()) != null)
             throw new DuplicateUsernameException("Username is already taken");
-        if (repository.findByEmail(utilisateur.getEmail()) != null)
+        if (repository.findByEmail(client.getEmail()) != null)
             throw new DuplicateEmailException("Email is already registered");
-        utilisateur.setPassword(hashPassword(utilisateur.getPassword()));
-        return repository.save(utilisateur);
+        client.setPassword(hashPassword(client.getPassword()));
+        return repository.save(client);
     }
 
     @Override
-    public List<Utilisateur> getAllUsers() {
+    public List<Client> getAllClients() {
         return repository.findAll();
     }
 
     @Override
-    public Utilisateur getUserById(Long id) {
+    public Client getClientById(Long id) {
         return repository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
     }
 
     @Override
-    public Utilisateur updateUser(Long id, Utilisateur newUser) {
+    public Client updateClient(Long id, Client newUser) {
         return repository.findById(id).map(user -> {
             if (!user.getUsername().equals(newUser.getUsername()) &&
                     repository.findByUsername(newUser.getUsername()) != null)
@@ -55,8 +55,8 @@ public class ServiceUtilisateurImpl implements iServiceUtilisateur{
     }
 
     @Override
-    public String deleteUser(Long id) {
-        Utilisateur user = repository.findById(id).orElse(null);
+    public String deleteClient(Long id) {
+        Client user = repository.findById(id).orElse(null);
         if (user == null)
             throw new UserNotFoundException(id);
         repository.deleteById(id);
@@ -64,19 +64,19 @@ public class ServiceUtilisateurImpl implements iServiceUtilisateur{
     }
 
     @Override
-    public Utilisateur registerUser(Utilisateur utilisateur) {
-        if (repository.findByUsername(utilisateur.getUsername()) != null)
+    public Client registerClient(Client client) {
+        if (repository.findByUsername(client.getUsername()) != null)
             throw new DuplicateUsernameException("Username is already taken");
-        if (repository.findByEmail(utilisateur.getEmail()) != null)
+        if (repository.findByEmail(client.getEmail()) != null)
             throw new DuplicateEmailException("Email is already registered");
-        String hashedPassword = hashPassword(utilisateur.getPassword());
-        utilisateur.setPassword(hashedPassword);
-        return repository.save(utilisateur);
+        String hashedPassword = hashPassword(client.getPassword());
+        client.setPassword(hashedPassword);
+        return repository.save(client);
     }
 
     @Override
-    public Utilisateur loginUser(String username, String password) {
-        Utilisateur user = repository.findByUsername(username);
+    public Client loginClient(String username, String password) {
+        Client user = repository.findByUsername(username);
         if (user == null)
             return null;
         if (verifyPassword(password, user.getPassword()))
@@ -96,7 +96,7 @@ public class ServiceUtilisateurImpl implements iServiceUtilisateur{
 }
 //    private boolean findUserByData(String text){
 //        boolean exists = false;
-//        for(Utilisateur utilisateur : getAllUsers()){
+//        for(Client utilisateur : getAllUsers()){
 //            if (utilisateur.getEmail().equals(text) || utilisateur.getUsername().equals(text)) {
 //                exists = true;
 //                break;
@@ -105,8 +105,8 @@ public class ServiceUtilisateurImpl implements iServiceUtilisateur{
 //        return exists;
 //    }
 //
-//    private Utilisateur update(Utilisateur utilisateur,Long id){
-//        for(Utilisateur user : getAllUsers()){
+//    private Client update(Client utilisateur,Long id){
+//        for(Client user : getAllUsers()){
 //            if (user.getId().equals(id)) {
 //                user.setUsername(utilisateur.getUsername());
 //                user.setFullname(utilisateur.getFullname());
@@ -119,12 +119,12 @@ public class ServiceUtilisateurImpl implements iServiceUtilisateur{
 //    }
 //
 //    @Override
-//    public List<Utilisateur> getAllUsers() {
+//    public List<Client> getAllUsers() {
 //        return repository.findAll();
 //    }
 //
 //    @Override
-//    public Utilisateur newUser(Utilisateur utilisateur) {
+//    public Client newUser(Client utilisateur) {
 //        if(!findUserByData(utilisateur.getEmail()) && !findUserByData(utilisateur.getUsername()))
 //            return repository.save(utilisateur);
 //        else
@@ -132,12 +132,12 @@ public class ServiceUtilisateurImpl implements iServiceUtilisateur{
 //    }
 //
 //    @Override
-//    public Optional<Utilisateur> getUserById(Long id) {
+//    public Optional<Client> getUserById(Long id) {
 //        return repository.findById(id);
 //    }
 //
 //    @Override
-//    public Utilisateur updateUser(Utilisateur utilisateur, Long id) {
+//    public Client updateUser(Client utilisateur, Long id) {
 //        if(!findUserByData(utilisateur.getEmail()) && !findUserByData(utilisateur.getUsername())
 //            && getUserById(id).isPresent()){
 //            return update(utilisateur,id);
