@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ServiceClientImpl implements iServiceClient {
+public class iServiceClientImpl implements iServiceClient {
     @Autowired
     private ClientRepository clientRepository;
 

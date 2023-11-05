@@ -15,7 +15,7 @@ public class iServiceTicketImpl implements iServiceTicket {
 
     @Override
     public Ticket saveTicket(Ticket ticket) {
-        return null;
+        return ticketRepository.save(ticket);
     }
 
     @Override

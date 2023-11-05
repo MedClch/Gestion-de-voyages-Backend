@@ -1,6 +1,5 @@
 package com.example.projet.Services.Voyages;
 
-import com.example.projet.Model.Ticket;
 import com.example.projet.Model.Voyage;
 
 import java.util.List;

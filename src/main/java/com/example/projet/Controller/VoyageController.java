@@ -1,6 +1,5 @@
 package com.example.projet.Controller;
 
-import com.example.projet.Model.Client;
 import com.example.projet.Model.Voyage;
 import com.example.projet.Services.Voyages.iServiceVoyage;
 import org.springframework.beans.factory.annotation.Autowired;

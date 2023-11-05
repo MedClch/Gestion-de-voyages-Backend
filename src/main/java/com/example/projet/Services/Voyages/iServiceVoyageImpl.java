@@ -15,7 +15,7 @@ public class iServiceVoyageImpl implements iServiceVoyage {
 
     @Override
     public Voyage saveVoyage(Voyage voyage) {
-        return null;
+            return voyageRepository.save(voyage);
     }
 
     @Override
