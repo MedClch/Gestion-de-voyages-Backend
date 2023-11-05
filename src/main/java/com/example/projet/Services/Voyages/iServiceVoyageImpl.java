@@ -1,5 +1,8 @@
 package com.example.projet.Services.Voyages;
 
+import com.example.projet.Exceptions.DuplicateEmailException;
+import com.example.projet.Exceptions.DuplicateUsernameException;
+import com.example.projet.Exceptions.DuplicateVoyageException;
 import com.example.projet.Exceptions.VoyageNotFoundException;
 import com.example.projet.Model.Voyage;
 import com.example.projet.Repositories.VoyageRepository;
@@ -13,9 +16,18 @@ public class iServiceVoyageImpl implements iServiceVoyage {
     @Autowired
     private VoyageRepository voyageRepository;
 
+    private boolean exists(Voyage voyage){
+        for(Voyage v : voyageRepository.findAll())
+            if(v.equals(voyage))
+                return true;
+        return false;
+    }
+
     @Override
     public Voyage saveVoyage(Voyage voyage) {
-            return voyageRepository.save(voyage);
+        if (exists(voyage))
+            throw new DuplicateVoyageException("Trip exists already");
+        return voyageRepository.save(voyage);
     }
 
     @Override

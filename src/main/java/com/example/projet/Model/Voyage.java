@@ -20,6 +20,12 @@ public class Voyage {
     private String lieudepart;
     @Column(nullable = false)
     private String lieuarrivee;
+    @Column(nullable = false)
+    private LocalDateTime heuredepart;
+    @Column(nullable = false)
+    private LocalDateTime heurearrivee;
+    @Column(nullable = false)
+    private Double prix;
     @OneToMany(mappedBy = "voyage")
     private List<Ticket> tickets;
 }

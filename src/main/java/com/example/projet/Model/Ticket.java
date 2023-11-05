@@ -21,10 +21,10 @@ public class Ticket {
     @ManyToOne
     @JoinColumn(name = "client_id")
     private Client client;
-    @Column(nullable = false)
-    private LocalDateTime depart;
-    @Column(nullable = false)
-    private LocalDateTime arrivee;
-    @Column(nullable = false)
-    private Double prix;
+//    @Column(nullable = false)
+//    private LocalDateTime depart;
+//    @Column(nullable = false)
+//    private LocalDateTime arrivee;
+//    @Column(nullable = false)
+//    private Double prix;
 }
