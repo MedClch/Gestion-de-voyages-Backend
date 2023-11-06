@@ -15,7 +15,7 @@ import java.util.List;
 public class Voyage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idVoyage;
+    private Long idv;
     @Column(nullable = false)
     private String lieudepart;
     @Column(nullable = false)

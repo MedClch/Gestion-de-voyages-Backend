@@ -14,17 +14,11 @@ import java.time.LocalDateTime;
 public class Ticket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idTicket;
+    private Long idt;
     @ManyToOne
     @JoinColumn(name = "voyage_id")
     private Voyage voyage;
     @ManyToOne
     @JoinColumn(name = "client_id")
     private Client client;
-//    @Column(nullable = false)
-//    private LocalDateTime depart;
-//    @Column(nullable = false)
-//    private LocalDateTime arrivee;
-//    @Column(nullable = false)
-//    private Double prix;
 }
