@@ -1,8 +1,10 @@
 package com.example.projet.Services.Tickets;
 
 import com.example.projet.Exceptions.TicketNotFoundException;
+import com.example.projet.Model.Client;
 import com.example.projet.Model.Ticket;
 import com.example.projet.Model.Voyage;
+import com.example.projet.Repositories.ClientRepository;
 import com.example.projet.Repositories.TicketRepository;
 import com.example.projet.Repositories.VoyageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,8 @@ public class iServiceTicketImpl implements iServiceTicket {
     private TicketRepository ticketRepository;
     @Autowired
     private VoyageRepository voyageRepository;
+    @Autowired
+    private ClientRepository clientRepository;
 
     private boolean removeTicketfromVoyage(Ticket ticket){
         for(Voyage v : voyageRepository.findAll()){
@@ -28,8 +32,16 @@ public class iServiceTicketImpl implements iServiceTicket {
     }
 
     @Override
-    public Ticket saveTicket(Ticket ticket) {
-        return ticketRepository.save(ticket);
+    public Ticket saveTicket(Ticket ticket, Long voyageId, Long clientId) {
+        Voyage voyage = voyageRepository.findById(voyageId).orElse(null);
+        Client client = clientRepository.findById(clientId).orElse(null);
+
+        if (voyage != null && client != null) {
+            ticket.setVoyage(voyage);
+            ticket.setClient(client);
+            return ticketRepository.save(ticket);
+        } else
+            return null;
     }
 
     @Override

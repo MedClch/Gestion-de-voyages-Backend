@@ -1,5 +1,8 @@
 package com.example.projet.Model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,6 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idv")
 public class Voyage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,5 +31,6 @@ public class Voyage {
     @Column(nullable = false)
     private Double prix;
     @OneToMany(mappedBy = "voyage")
+//    @JsonManagedReference
     private List<Ticket> tickets;
 }
