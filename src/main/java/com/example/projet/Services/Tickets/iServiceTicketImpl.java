@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class iServiceTicketImpl implements iServiceTicket {
@@ -56,7 +57,13 @@ public class iServiceTicketImpl implements iServiceTicket {
 
     @Override
     public Ticket updateTicket(Long id, Ticket ticket) {
-        return null;
+        Optional<Ticket> existingTicketOptional = ticketRepository.findById(id);
+        if (existingTicketOptional.isEmpty())
+            throw new TicketNotFoundException(id);
+        Ticket existingTicket = existingTicketOptional.get();
+        existingTicket.setVoyage(ticket.getVoyage());
+        existingTicket.setClient(ticket.getClient());
+        return ticketRepository.save(existingTicket);
     }
 
     @Override

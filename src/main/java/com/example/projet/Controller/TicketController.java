@@ -1,5 +1,6 @@
 package com.example.projet.Controller;
 
+import com.example.projet.Exceptions.TicketNotFoundException;
 import com.example.projet.Model.Client;
 import com.example.projet.Model.Ticket;
 import com.example.projet.Model.Voyage;
@@ -46,9 +47,10 @@ public class TicketController {
     }
 
     @PutMapping("/ticket/{id}")
-    Ticket updateTicket(@RequestBody Ticket ticket, @PathVariable Long id) {
-        return serviceTicket.updateTicket(id, ticket);
+    public Ticket updateTicket(@RequestBody Ticket newTicket, @PathVariable Long id) {
+        return serviceTicket.updateTicket(id, newTicket);
     }
+
 
     @DeleteMapping("/ticket/{id}")
     public ResponseEntity<String> deleteTicket(@PathVariable Long id) {
