@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin("http://localhost:3000")
+@CrossOrigin("http://localhost:3003")
 public class VoyageController {
     @Autowired
     private iServiceVoyage serviceVoyage;
