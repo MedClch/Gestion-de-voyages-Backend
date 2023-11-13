@@ -41,18 +41,18 @@ public class TicketController {
         return serviceTicket.getAllTickets();
     }
 
-    @GetMapping("/ticket/{id}")
+    @GetMapping("/tickets/{id}")
     Ticket getTicketByID(@PathVariable Long id) {
         return serviceTicket.getTicketById(id);
     }
 
-    @PutMapping("/ticket/{id}")
+    @PutMapping("/tickets/{id}")
     public Ticket updateTicket(@RequestBody Ticket newTicket, @PathVariable Long id) {
         return serviceTicket.updateTicket(id, newTicket);
     }
 
 
-    @DeleteMapping("/ticket/{id}")
+    @DeleteMapping("/tickets/{id}")
     public ResponseEntity<String> deleteTicket(@PathVariable Long id) {
         String result = serviceTicket.deleteTicket(id);
         return new ResponseEntity<>(result, HttpStatus.OK);

@@ -1,9 +1,6 @@
 package com.example.projet.Services.Voyages;
 
-import com.example.projet.Exceptions.DuplicateEmailException;
-import com.example.projet.Exceptions.DuplicateUsernameException;
-import com.example.projet.Exceptions.DuplicateVoyageException;
-import com.example.projet.Exceptions.VoyageNotFoundException;
+import com.example.projet.Exceptions.*;
 import com.example.projet.Model.Voyage;
 import com.example.projet.Repositories.VoyageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +15,8 @@ public class iServiceVoyageImpl implements iServiceVoyage {
 
     private boolean exists(Voyage voyage){
         for(Voyage v : voyageRepository.findAll())
-            if(v.equals(voyage))
+            if(v.getLieuarrivee().equals(voyage.getLieuarrivee()) && v.getLieudepart().equals(voyage.getLieudepart())
+                    && v.getHeuredepart().equals(voyage.getHeuredepart()) && v.getHeurearrivee().equals(voyage.getHeurearrivee()))
                 return true;
         return false;
     }
@@ -42,7 +40,16 @@ public class iServiceVoyageImpl implements iServiceVoyage {
 
     @Override
     public Voyage updateVoyage(Long id, Voyage voyage) {
-        return null;
+        return voyageRepository.findById(id).map(v -> {
+            if (exists(voyage))
+                throw new DuplicateVoyageException("Trip exists already !");
+            v.setLieudepart(voyage.getLieudepart());
+            v.setLieuarrivee(voyage.getLieuarrivee());
+            v.setHeuredepart(voyage.getHeuredepart());
+            v.setHeurearrivee(voyage.getHeurearrivee());
+            v.setPrix(voyage.getPrix());
+            return voyageRepository.save(v);
+        }).orElseThrow(() -> new VoyageNotFoundException(id));
     }
 
     @Override

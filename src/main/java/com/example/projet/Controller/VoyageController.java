@@ -24,17 +24,17 @@ public class VoyageController {
         return serviceVoyage.getAllVoyages();
     }
 
-    @GetMapping("/voyage/{id}")
+    @GetMapping("/voyages/{id}")
     Voyage getVoyageByID(@PathVariable Long id) {
         return serviceVoyage.getVoyageById(id);
     }
 
-    @PutMapping("/voyage/{id}")
+    @PutMapping("/voyages/{id}")
     Voyage updateVoyage(@RequestBody Voyage newUser, @PathVariable Long id) {
         return serviceVoyage.updateVoyage(id, newUser);
     }
 
-    @DeleteMapping("/voyage/{id}")
+    @DeleteMapping("/voyages/{id}")
     public ResponseEntity<String> deleteVoyage(@PathVariable Long id) {
         String result = serviceVoyage.deleteVoyage(id);
         return new ResponseEntity<>(result, HttpStatus.OK);
