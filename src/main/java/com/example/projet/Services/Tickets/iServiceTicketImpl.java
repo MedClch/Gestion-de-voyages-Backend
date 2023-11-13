@@ -1,6 +1,9 @@
 package com.example.projet.Services.Tickets;
 
+import com.example.projet.Exceptions.DuplicateTicketException;
+import com.example.projet.Exceptions.DuplicateVoyageException;
 import com.example.projet.Exceptions.TicketNotFoundException;
+import com.example.projet.Exceptions.VoyageNotFoundException;
 import com.example.projet.Model.Client;
 import com.example.projet.Model.Ticket;
 import com.example.projet.Model.Voyage;
@@ -55,15 +58,33 @@ public class iServiceTicketImpl implements iServiceTicket {
         return ticketRepository.findById(id).orElseThrow(() -> new TicketNotFoundException(id));
     }
 
+//    @Override
+//    public Ticket updateTicket(Long id, Ticket ticket) {
+//        Optional<Ticket> existingTicketOptional = ticketRepository.findById(id);
+//        if (existingTicketOptional.isEmpty())
+//            throw new TicketNotFoundException(id);
+//        Ticket existingTicket = existingTicketOptional.get();
+//        existingTicket.setVoyage(ticket.getVoyage());
+//        existingTicket.setClient(ticket.getClient());
+//        return ticketRepository.save(existingTicket);
+//    }
+
     @Override
     public Ticket updateTicket(Long id, Ticket ticket) {
-        Optional<Ticket> existingTicketOptional = ticketRepository.findById(id);
-        if (existingTicketOptional.isEmpty())
-            throw new TicketNotFoundException(id);
-        Ticket existingTicket = existingTicketOptional.get();
-        existingTicket.setVoyage(ticket.getVoyage());
-        existingTicket.setClient(ticket.getClient());
-        return ticketRepository.save(existingTicket);
+        return ticketRepository.findById(id).map(t -> {
+            if (exists(ticket))
+                throw new DuplicateTicketException("Trip exists already !");
+            t.setClient(ticket.getClient());
+            t.setVoyage(ticket.getVoyage());
+            return ticketRepository.save(t);
+        }).orElseThrow(() -> new VoyageNotFoundException(id));
+    }
+
+    private boolean exists(Ticket ticket) {
+        for(Ticket t : ticketRepository.findAll())
+            if(t.equals(ticket))
+                return true;
+        return false;
     }
 
     @Override
