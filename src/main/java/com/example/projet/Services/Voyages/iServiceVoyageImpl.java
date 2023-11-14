@@ -5,10 +5,12 @@ import com.example.projet.Model.Voyage;
 import com.example.projet.Repositories.VoyageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@Transactional
 public class iServiceVoyageImpl implements iServiceVoyage {
     @Autowired
     private VoyageRepository voyageRepository;

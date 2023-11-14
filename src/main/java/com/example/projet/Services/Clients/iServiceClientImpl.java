@@ -8,10 +8,12 @@ import com.example.projet.Repositories.ClientRepository;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@Transactional
 public class iServiceClientImpl implements iServiceClient {
     @Autowired
     private ClientRepository clientRepository;
