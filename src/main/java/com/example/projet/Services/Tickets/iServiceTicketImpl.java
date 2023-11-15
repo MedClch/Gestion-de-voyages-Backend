@@ -72,21 +72,38 @@ public class iServiceTicketImpl implements iServiceTicket {
 
     @Override
     public Ticket updateTicket(Long id, Ticket ticket) {
-        return ticketRepository.findById(id).map(t -> {
-            if (exists(ticket))
-                throw new DuplicateTicketException("Trip exists already !");
-            t.setClient(ticket.getClient());
-            t.setVoyage(ticket.getVoyage());
-            return ticketRepository.save(t);
-        }).orElseThrow(() -> new VoyageNotFoundException(id));
+        return ticketRepository.findById(id).map(existingTicket -> {
+            if (existsByClientAndVoyage(ticket.getClient(), ticket.getVoyage()))
+                throw new DuplicateTicketException("Trip exists already!");
+            existingTicket.setClient(ticket.getClient());
+            existingTicket.setVoyage(ticket.getVoyage());
+            return ticketRepository.save(existingTicket);
+                }).orElseThrow(() -> new VoyageNotFoundException(id));
     }
 
-    private boolean exists(Ticket ticket) {
-        for(Ticket t : ticketRepository.findAll())
-            if(t.equals(ticket))
-                return true;
-        return false;
+    private boolean existsByClientAndVoyage(Client client, Voyage voyage) {
+        return ticketRepository.existsByClientAndVoyage(client, voyage);
     }
+
+
+
+//    @Override
+//    public Ticket updateTicket(Long id, Ticket ticket) {
+//        return ticketRepository.findById(id).map(t -> {
+//            if (exists(ticket))
+//                throw new DuplicateTicketException("Trip exists already !");
+//            t.setClient(ticket.getClient());
+//            t.setVoyage(ticket.getVoyage());
+//            return ticketRepository.save(t);
+//        }).orElseThrow(() -> new VoyageNotFoundException(id));
+//    }
+//
+//    private boolean exists(Ticket ticket) {
+//        for(Ticket t : ticketRepository.findAll())
+//            if(t.equals(ticket))
+//                return true;
+//        return false;
+//    }
 
     @Override
     public String deleteTicket(Long id) {

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin("http://localhost:3004")
+@CrossOrigin(origins = "http://localhost:3004")
 public class TicketController {
     @Autowired
     private iServiceTicket serviceTicket;
