@@ -40,8 +40,8 @@ public class iServiceTicketImpl implements iServiceTicket {
     public Ticket saveTicket(Ticket ticket, Long voyageId, Long clientId) {
         Voyage voyage = voyageRepository.findById(voyageId).orElse(null);
         Client client = clientRepository.findById(clientId).orElse(null);
-
-        if (voyage != null && client != null) {
+        if (voyage != null && client != null
+                && !existsByClientAndVoyage(client,voyage)) {
             ticket.setVoyage(voyage);
             ticket.setClient(client);
             return ticketRepository.save(ticket);
@@ -82,7 +82,10 @@ public class iServiceTicketImpl implements iServiceTicket {
     }
 
     private boolean existsByClientAndVoyage(Client client, Voyage voyage) {
-        return ticketRepository.existsByClientAndVoyage(client, voyage);
+        for(Ticket t : ticketRepository.findAll())
+            if(t.getVoyage().equals(voyage) && t.getClient().equals(client))
+                return true;
+        return false;
     }
 
 
