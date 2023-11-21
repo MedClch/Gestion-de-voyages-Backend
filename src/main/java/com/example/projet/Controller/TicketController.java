@@ -52,6 +52,12 @@ public class TicketController {
     }
 
 
+//    @PutMapping("/ticket/{id}")
+//    public Ticket majTicket(@RequestBody Ticket newT, @RequestParam Long voyageId, @RequestParam Long clientId){
+//
+//    }
+
+
     @DeleteMapping("/tickets/{id}")
     public ResponseEntity<String> deleteTicket(@PathVariable Long id) {
         String result = serviceTicket.deleteTicket(id);
