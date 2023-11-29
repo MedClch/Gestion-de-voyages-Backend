@@ -46,34 +46,34 @@ public class TicketController {
         return serviceTicket.getTicketById(id);
     }
 
-//    @PutMapping("/tickets/{id}")
-//    public Ticket updateTicket(@RequestBody Ticket newTicket, @PathVariable Long id) {
-//        return serviceTicket.updateTicket(id, newTicket);
-//    }
-
-
     @PutMapping("/tickets/{id}")
-    public ResponseEntity<Ticket> majTicket(@RequestBody Ticket updatedTicket, @PathVariable Long id,
-                                            @RequestParam Long voyageId,
-                                            @RequestParam Long clientId) {
-        try {
-            Ticket existingTicket = serviceTicket.getTicketById(id);
-            if (existingTicket == null)
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            if (voyageId == null || clientId == null)
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-            Client client = serviceClient.getClientById(clientId);
-            Voyage voyage = serviceVoyage.getVoyageById(voyageId);
-            if (client == null || voyage == null)
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            existingTicket.setVoyage(voyage);
-            existingTicket.setClient(client);
-            Ticket savedTicket = serviceTicket.saveTicket(existingTicket, voyageId, clientId);
-            return new ResponseEntity<>(savedTicket, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    public Ticket updateTicket(@RequestBody Ticket newTicket, @PathVariable Long id) {
+        return serviceTicket.updateTicket(id, newTicket);
     }
+
+
+//    @PutMapping("/tickets/{id}")
+//    public ResponseEntity<Ticket> majTicket(@RequestBody Ticket updatedTicket, @PathVariable Long id,
+//                                            @RequestParam Long voyageId,
+//                                            @RequestParam Long clientId) {
+//        try {
+//            Ticket existingTicket = serviceTicket.getTicketById(id);
+//            if (existingTicket == null)
+//                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//            if (voyageId == null || clientId == null)
+//                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//            Client client = serviceClient.getClientById(clientId);
+//            Voyage voyage = serviceVoyage.getVoyageById(voyageId);
+//            if (client == null || voyage == null)
+//                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//            existingTicket.setVoyage(voyage);
+//            existingTicket.setClient(client);
+//            Ticket savedTicket = serviceTicket.saveTicket(existingTicket, voyageId, clientId);
+//            return new ResponseEntity<>(savedTicket, HttpStatus.OK);
+//        } catch (Exception e) {
+//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//    }
 
 
 // dev1 push test

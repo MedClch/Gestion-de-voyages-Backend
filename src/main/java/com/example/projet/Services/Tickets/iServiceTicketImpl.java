@@ -36,6 +36,16 @@ public class iServiceTicketImpl implements iServiceTicket {
         return false;
     }
 
+    private boolean removeTicketfromVClient(Ticket ticket){
+        for(Client c : clientRepository.findAll()){
+            if(c.equals(ticket.getClient())){
+                c.getTickets().remove(ticket);
+                return true;
+            }
+        }
+        return false;
+    }
+
     @Override
     public Ticket saveTicket(Ticket ticket, Long voyageId, Long clientId) {
         Voyage voyage = voyageRepository.findById(voyageId).orElse(null);
@@ -75,8 +85,10 @@ public class iServiceTicketImpl implements iServiceTicket {
         return ticketRepository.findById(id).map(existingTicket -> {
             if (existsByClientAndVoyage(ticket.getClient(), ticket.getVoyage()))
                 throw new DuplicateTicketException("Trip exists already!");
-            existingTicket.setClient(ticket.getClient());
-            existingTicket.setVoyage(ticket.getVoyage());
+            if(removeTicketfromVoyage(ticket) && removeTicketfromVClient(ticket)){
+                existingTicket.setClient(ticket.getClient());
+                existingTicket.setVoyage(ticket.getVoyage());
+            }
             return ticketRepository.save(existingTicket);
                 }).orElseThrow(() -> new VoyageNotFoundException(id));
     }
