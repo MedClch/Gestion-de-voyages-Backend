@@ -80,17 +80,39 @@ public class iServiceTicketImpl implements iServiceTicket {
 //        return ticketRepository.save(existingTicket);
 //    }
 
+    @Transactional
     @Override
     public Ticket updateTicket(Long id, Ticket ticket) {
-        return ticketRepository.findById(id).map(existingTicket -> {
-            if (existsByClientAndVoyage(ticket.getClient(), ticket.getVoyage()))
-                throw new DuplicateTicketException("Trip exists already!");
-            if(removeTicketfromVoyage(ticket) && removeTicketfromVClient(ticket)){
-                existingTicket.setClient(ticket.getClient());
+        Optional<Ticket> optionalTicket = ticketRepository.findById(id);
+        if (optionalTicket.isPresent()) {
+            Ticket existingTicket = optionalTicket.get();
+            if (ticket.getVoyage() != null && removeTicketfromVoyage(existingTicket)) {
+                System.out.println("New trip");
                 existingTicket.setVoyage(ticket.getVoyage());
+//                removeTicketfromVoyage(existingTicket);
+            }
+            if (ticket.getClient() != null && removeTicketfromVClient(existingTicket)) {
+                System.out.println("New client");
+                existingTicket.setClient(ticket.getClient());
+//                removeTicketfromVClient(existingTicket);
             }
             return ticketRepository.save(existingTicket);
-                }).orElseThrow(() -> new VoyageNotFoundException(id));
+        } else
+            return null;
+//        return ticketRepository.findById(id).map(existingTicket -> {
+//            if (existsByClientAndVoyage(ticket.getClient(), ticket.getVoyage()))
+//                throw new DuplicateTicketException("Trip exists already!");
+//            if(removeTicketfromVoyage(ticket) && removeTicketfromVClient(ticket)){
+//                existingTicket.setClient(ticket.getClient());
+//                existingTicket.setVoyage(ticket.getVoyage());
+//            }
+        // or
+//            if(removeTicketfromVoyage(ticket) && removeTicketfromVClient(ticket)){
+//                existingTicket.setClient(ticket.getClient());
+//                existingTicket.setVoyage(ticket.getVoyage());
+//            }
+//            return ticketRepository.save(existingTicket);
+//                }).orElseThrow(() -> new VoyageNotFoundException(id));
     }
 
     private boolean existsByClientAndVoyage(Client client, Voyage voyage) {

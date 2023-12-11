@@ -47,9 +47,16 @@ public class TicketController {
     }
 
     @PutMapping("/tickets/{id}")
-    public Ticket updateTicket(@RequestBody Ticket newTicket, @PathVariable Long id) {
-        return serviceTicket.updateTicket(id, newTicket);
+    public ResponseEntity<Ticket> updateTicket(@PathVariable Long id, @RequestBody Ticket newTicket) {
+        Ticket updatedTicket = serviceTicket.updateTicket(id, newTicket);
+        if (updatedTicket != null)
+            return ResponseEntity.ok(updatedTicket);
+        else
+            return ResponseEntity.notFound().build();
     }
+//    public Ticket updateTicket(@RequestBody Ticket newTicket, @PathVariable Long id) {
+//        return serviceTicket.updateTicket(id, newTicket);
+//    }
 
 
 //    @PutMapping("/tickets/{id}")
