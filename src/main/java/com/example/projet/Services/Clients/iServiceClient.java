@@ -1,6 +1,6 @@
 package com.example.projet.Services.Clients;
 
-import com.example.projet.Model.Client;
+import com.example.projet.Models.Client;
 
 import java.util.List;
 

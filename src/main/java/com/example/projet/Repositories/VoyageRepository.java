@@ -1,6 +1,6 @@
 package com.example.projet.Repositories;
 
-import com.example.projet.Model.Voyage;
+import com.example.projet.Models.Voyage;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

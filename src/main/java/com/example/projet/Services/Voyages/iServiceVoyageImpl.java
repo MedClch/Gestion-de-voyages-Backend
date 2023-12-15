@@ -1,7 +1,7 @@
 package com.example.projet.Services.Voyages;
 
 import com.example.projet.Exceptions.*;
-import com.example.projet.Model.Voyage;
+import com.example.projet.Models.Voyage;
 import com.example.projet.Repositories.VoyageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

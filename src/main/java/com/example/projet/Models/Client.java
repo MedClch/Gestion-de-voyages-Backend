@@ -1,7 +1,6 @@
-package com.example.projet.Model;
+package com.example.projet.Models;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -27,6 +26,6 @@ public class Client {
     private String email;
     @Column(nullable = false,length = 300)
     private String password;
-    @OneToMany(mappedBy = "client")
+    @OneToMany(mappedBy = "client",cascade = CascadeType.ALL)
     private List<Ticket> tickets;
 }

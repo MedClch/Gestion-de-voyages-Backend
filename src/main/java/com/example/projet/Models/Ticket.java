@@ -1,4 +1,4 @@
-package com.example.projet.Model;
+package com.example.projet.Models;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -13,10 +13,10 @@ public class Ticket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idt;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "voyage_id")
+    @ManyToOne
+    @JoinColumn(name = "voyage_id",nullable = false)
     private Voyage voyage;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "client_id")
+    @ManyToOne
+    @JoinColumn(name = "client_id",nullable = false)
     private Client client;
 }

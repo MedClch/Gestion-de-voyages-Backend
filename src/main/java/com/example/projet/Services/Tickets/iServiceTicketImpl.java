@@ -1,11 +1,9 @@
 package com.example.projet.Services.Tickets;
 
-import com.example.projet.Exceptions.DuplicateTicketException;
 import com.example.projet.Exceptions.TicketNotFoundException;
-import com.example.projet.Exceptions.VoyageNotFoundException;
-import com.example.projet.Model.Client;
-import com.example.projet.Model.Ticket;
-import com.example.projet.Model.Voyage;
+import com.example.projet.Models.Client;
+import com.example.projet.Models.Ticket;
+import com.example.projet.Models.Voyage;
 import com.example.projet.Repositories.ClientRepository;
 import com.example.projet.Repositories.TicketRepository;
 import com.example.projet.Repositories.VoyageRepository;
@@ -71,7 +69,7 @@ public class iServiceTicketImpl implements iServiceTicket {
 
 //    @Override
 //    public Ticket updateTicket(Long id, Ticket ticket) {
-//        Optional<Ticket> existingTicketOptional = ticketRepository.findById(id);
+//        Optional<Ticket> existyingTicketOptional = ticketRepository.findById(id);
 //        if (existingTicketOptional.isEmpty())
 //            throw new TicketNotFoundException(id);
 //        Ticket existingTicket = existingTicketOptional.get();

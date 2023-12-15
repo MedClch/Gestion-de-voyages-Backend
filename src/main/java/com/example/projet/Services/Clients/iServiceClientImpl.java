@@ -3,7 +3,7 @@ package com.example.projet.Services.Clients;
 import com.example.projet.Exceptions.DuplicateEmailException;
 import com.example.projet.Exceptions.DuplicateUsernameException;
 import com.example.projet.Exceptions.UserNotFoundException;
-import com.example.projet.Model.Client;
+import com.example.projet.Models.Client;
 import com.example.projet.Repositories.ClientRepository;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,53 +96,3 @@ public class iServiceClientImpl implements iServiceClient {
     }
 
 }
-//    private boolean findUserByData(String text){
-//        boolean exists = false;
-//        for(Client utilisateur : getAllUsers()){
-//            if (utilisateur.getEmail().equals(text) || utilisateur.getUsername().equals(text)) {
-//                exists = true;
-//                break;
-//            }
-//        }
-//        return exists;
-//    }
-//
-//    private Client update(Client utilisateur,Long id){
-//        for(Client user : getAllUsers()){
-//            if (user.getId().equals(id)) {
-//                user.setUsername(utilisateur.getUsername());
-//                user.setFullname(utilisateur.getFullname());
-//                user.setEmail(utilisateur.getEmail());
-//                user.setPassword(utilisateur.getPassword());
-//                return user;
-//            }
-//        }
-//        return null;
-//    }
-//
-//    @Override
-//    public List<Client> getAllUsers() {
-//        return repository.findAll();
-//    }
-//
-//    @Override
-//    public Client newUser(Client utilisateur) {
-//        if(!findUserByData(utilisateur.getEmail()) && !findUserByData(utilisateur.getUsername()))
-//            return repository.save(utilisateur);
-//        else
-//            return null;
-//    }
-//
-//    @Override
-//    public Optional<Client> getUserById(Long id) {
-//        return repository.findById(id);
-//    }
-//
-//    @Override
-//    public Client updateUser(Client utilisateur, Long id) {
-//        if(!findUserByData(utilisateur.getEmail()) && !findUserByData(utilisateur.getUsername())
-//            && getUserById(id).isPresent()){
-//            return update(utilisateur,id);
-//        }
-//        return null;
-//    }

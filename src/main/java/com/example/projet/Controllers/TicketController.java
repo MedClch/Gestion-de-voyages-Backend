@@ -1,9 +1,6 @@
-package com.example.projet.Controller;
+package com.example.projet.Controllers;
 
-import com.example.projet.Exceptions.TicketNotFoundException;
-import com.example.projet.Model.Client;
-import com.example.projet.Model.Ticket;
-import com.example.projet.Model.Voyage;
+import com.example.projet.Models.Ticket;
 import com.example.projet.Services.Clients.iServiceClient;
 import com.example.projet.Services.Tickets.iServiceTicket;
 import com.example.projet.Services.Voyages.iServiceVoyage;

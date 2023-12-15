@@ -1,6 +1,6 @@
 package com.example.projet.Services.Tickets;
 
-import com.example.projet.Model.Ticket;
+import com.example.projet.Models.Ticket;
 
 import java.util.List;
 
