@@ -1,5 +1,7 @@
 package com.example.projet.Controllers;
 
+import com.example.projet.DTO.ClientDTO;
+import com.example.projet.Mappers.ClientDTOConverter;
 import com.example.projet.Models.Client;
 import com.example.projet.Services.Clients.iServiceClient;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +19,14 @@ public class RegistrationController {
     private iServiceClient utilisateurService;
 
     @PostMapping("/register")
-    public ResponseEntity<Client> registerUser(@RequestBody Client client) {
-        Client registeredUser = utilisateurService.registerClient(client);
-        return new ResponseEntity<>(registeredUser, HttpStatus.CREATED);
+    public ResponseEntity<ClientDTO> registerUser(@RequestBody ClientDTO clientDTO) {
+        ClientDTO registeredUserDTO = utilisateurService.registerClient(clientDTO);
+        return new ResponseEntity<>(registeredUserDTO, HttpStatus.CREATED);
     }
+
+//    @PostMapping("/register")
+//    public ResponseEntity<Client> registerUser(@RequestBody Client client) {
+//        Client registeredUser = utilisateurService.registerClient(client);
+//        return new ResponseEntity<>(registeredUser, HttpStatus.CREATED);
+//    }
 }
