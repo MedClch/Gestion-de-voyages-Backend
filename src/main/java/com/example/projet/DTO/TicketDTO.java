@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TicketDTO {
-//    private Long idt;
+    private Long idt;
     private Long idVo;
     private Long idCl;
 }
