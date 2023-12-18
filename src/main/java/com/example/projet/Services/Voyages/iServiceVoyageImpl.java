@@ -1,7 +1,6 @@
 package com.example.projet.Services.Voyages;
 
 import com.example.projet.DTO.VoyageDTO;
-import com.example.projet.Exceptions.*;
 import com.example.projet.Mappers.VoyageDTOConverter;
 import com.example.projet.Services.Exceptions.DuplicateVoyageException;
 import com.example.projet.Services.Exceptions.VoyageNotFoundException;
