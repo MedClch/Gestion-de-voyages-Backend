@@ -1,13 +1,14 @@
 package com.example.projet.Services.Tickets;
 
+import com.example.projet.DTO.TicketDTO;
 import com.example.projet.Models.Ticket;
 
 import java.util.List;
 
 public interface iServiceTicket {
-    Ticket saveTicket(Ticket ticket, Long voyageId, Long clientId);
-    List<Ticket> getAllTickets();
-    Ticket getTicketById(Long id);
-    Ticket updateTicket(Long id,Ticket ticket);
+    TicketDTO saveTicket(TicketDTO ticketDTO, Long voyageId, Long clientId);
+    List<TicketDTO> getAllTickets();
+    TicketDTO getTicketById(Long id);
+    TicketDTO updateTicket(Long id,TicketDTO ticketDTO);
     String deleteTicket(Long id);
 }

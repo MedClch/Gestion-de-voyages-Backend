@@ -1,7 +1,6 @@
 package com.example.projet.Controllers;
 
 import com.example.projet.DTO.VoyageDTO;
-import com.example.projet.Models.Voyage;
 import com.example.projet.Services.Voyages.iServiceVoyage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

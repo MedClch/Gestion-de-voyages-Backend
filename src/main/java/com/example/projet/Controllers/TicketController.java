@@ -1,6 +1,6 @@
 package com.example.projet.Controllers;
 
-import com.example.projet.Models.Ticket;
+import com.example.projet.DTO.TicketDTO;
 import com.example.projet.Services.Clients.iServiceClient;
 import com.example.projet.Services.Tickets.iServiceTicket;
 import com.example.projet.Services.Voyages.iServiceVoyage;
@@ -22,35 +22,77 @@ public class TicketController {
     private iServiceClient serviceClient;
 
     @PostMapping("/saveticket")
-    public Ticket newTicket(@RequestBody Ticket ticket, @RequestParam Long voyageId, @RequestParam Long clientId) {
+    public ResponseEntity<TicketDTO> newTicket(@RequestBody TicketDTO ticketDTO,
+                                               @RequestParam Long voyageId, @RequestParam Long clientId) {
         if (voyageId == null || clientId == null)
-            return null;
-        if(serviceClient.getClientById(clientId)==null || serviceVoyage.getVoyageById(voyageId)==null)
-            return null;
-        ticket.setVoyage(serviceVoyage.getVoyageById(voyageId));
-        ticket.setClient(serviceClient.getClientById(clientId));
-        return serviceTicket.saveTicket(ticket, voyageId, clientId);
+            return ResponseEntity.badRequest().build();
+        if (serviceClient.getClientById(clientId) == null || serviceVoyage.getVoyageById(voyageId) == null)
+            return ResponseEntity.badRequest().build();
+        TicketDTO savedTicketDTO = serviceTicket.saveTicket(ticketDTO, voyageId, clientId);
+        if (savedTicketDTO != null)
+            return new ResponseEntity<>(savedTicketDTO, HttpStatus.CREATED);
+        else
+            return ResponseEntity.badRequest().build();
     }
 
-
     @GetMapping("/tickets")
-    List<Ticket> allTickets() {
+    List<TicketDTO> allTickets() {
         return serviceTicket.getAllTickets();
     }
 
     @GetMapping("/tickets/{id}")
-    Ticket getTicketByID(@PathVariable Long id) {
-        return serviceTicket.getTicketById(id);
+    ResponseEntity<TicketDTO> getTicketByID(@PathVariable Long id) {
+        TicketDTO ticketDTO = serviceTicket.getTicketById(id);
+        return ticketDTO != null ? ResponseEntity.ok(ticketDTO)
+                : ResponseEntity.notFound().build();
     }
 
     @PutMapping("/tickets/{id}")
-    public ResponseEntity<Ticket> updateTicket(@PathVariable Long id, @RequestBody Ticket newTicket) {
-        Ticket updatedTicket = serviceTicket.updateTicket(id, newTicket);
-        if (updatedTicket != null)
-            return ResponseEntity.ok(updatedTicket);
-        else
-            return ResponseEntity.notFound().build();
+    public ResponseEntity<TicketDTO> updateTicket(@PathVariable Long id,
+                                                  @RequestBody TicketDTO updatedTicketDTO) {
+        TicketDTO updatedDTO = serviceTicket.updateTicket(id, updatedTicketDTO);
+        return updatedDTO != null ? ResponseEntity.ok(updatedDTO)
+                : ResponseEntity.notFound().build();
     }
+
+    @DeleteMapping("/tickets/{id}")
+    public ResponseEntity<String> deleteTicket(@PathVariable Long id) {
+        String result = serviceTicket.deleteTicket(id);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+//    @PostMapping("/saveticket")
+//    public Ticket newTicket(@RequestBody Ticket ticket, @RequestParam Long voyageId, @RequestParam Long clientId) {
+//        if (voyageId == null || clientId == null)
+//            return null;
+//        if(serviceClient.getClientById(clientId)==null || serviceVoyage.getVoyageById(voyageId)==null)
+//            return null;
+////        ticket.setVoyage(serviceVoyage.getVoyageById(voyageId));
+////        ticket.setClient(serviceClient.getClientById(clientId));
+//        return serviceTicket.saveTicket(ticket, voyageId, clientId);
+//    }
+//
+//
+//    @GetMapping("/tickets")
+//    List<Ticket> allTickets() {
+//        return serviceTicket.getAllTickets();
+//    }
+//
+//    @GetMapping("/tickets/{id}")
+//    Ticket getTicketByID(@PathVariable Long id) {
+//        return serviceTicket.getTicketById(id);
+//    }
+//
+//    @PutMapping("/tickets/{id}")
+//    public ResponseEntity<Ticket> updateTicket(@PathVariable Long id, @RequestBody Ticket newTicket) {
+//        Ticket updatedTicket = serviceTicket.updateTicket(id, newTicket);
+//        if (updatedTicket != null)
+//            return ResponseEntity.ok(updatedTicket);
+//        else
+//            return ResponseEntity.notFound().build();
+//    }
+
+
 //    public Ticket updateTicket(@RequestBody Ticket newTicket, @PathVariable Long id) {
 //        return serviceTicket.updateTicket(id, newTicket);
 //    }
@@ -81,10 +123,4 @@ public class TicketController {
 
 
 // dev1 push test
-
-    @DeleteMapping("/tickets/{id}")
-    public ResponseEntity<String> deleteTicket(@PathVariable Long id) {
-        String result = serviceTicket.deleteTicket(id);
-        return new ResponseEntity<>(result, HttpStatus.OK);
-    }
 }
