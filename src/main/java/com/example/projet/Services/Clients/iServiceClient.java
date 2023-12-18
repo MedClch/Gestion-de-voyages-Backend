@@ -1,7 +1,6 @@
 package com.example.projet.Services.Clients;
 
 import com.example.projet.DTO.ClientDTO;
-import com.example.projet.Models.Client;
 
 import java.util.List;
 

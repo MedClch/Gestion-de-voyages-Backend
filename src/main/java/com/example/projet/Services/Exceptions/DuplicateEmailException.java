@@ -1,4 +1,4 @@
-package com.example.projet.Exceptions;
+package com.example.projet.Services.Exceptions;
 
 public class DuplicateEmailException extends RuntimeException {
 

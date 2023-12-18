@@ -1,7 +1,7 @@
 package com.example.projet.Services.Tickets;
 
 import com.example.projet.DTO.TicketDTO;
-import com.example.projet.Models.Ticket;
+import com.example.projet.Services.Models.Ticket;
 
 import java.util.List;
 

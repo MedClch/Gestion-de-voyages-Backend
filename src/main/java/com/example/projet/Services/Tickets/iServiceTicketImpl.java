@@ -1,11 +1,11 @@
 package com.example.projet.Services.Tickets;
 
 import com.example.projet.DTO.TicketDTO;
-import com.example.projet.Exceptions.TicketNotFoundException;
+import com.example.projet.Services.Exceptions.TicketNotFoundException;
 import com.example.projet.Mappers.TicketDTOConverter;
-import com.example.projet.Models.Client;
-import com.example.projet.Models.Ticket;
-import com.example.projet.Models.Voyage;
+import com.example.projet.Services.Models.Client;
+import com.example.projet.Services.Models.Ticket;
+import com.example.projet.Services.Models.Voyage;
 import com.example.projet.Repositories.ClientRepository;
 import com.example.projet.Repositories.TicketRepository;
 import com.example.projet.Repositories.VoyageRepository;

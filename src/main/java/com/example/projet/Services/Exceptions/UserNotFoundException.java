@@ -1,4 +1,4 @@
-package com.example.projet.Exceptions;
+package com.example.projet.Services.Exceptions;
 
 public class UserNotFoundException extends RuntimeException{
     public UserNotFoundException(Long id){

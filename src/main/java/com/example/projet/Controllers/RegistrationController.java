@@ -1,8 +1,6 @@
 package com.example.projet.Controllers;
 
 import com.example.projet.DTO.ClientDTO;
-import com.example.projet.Mappers.ClientDTOConverter;
-import com.example.projet.Models.Client;
 import com.example.projet.Services.Clients.iServiceClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

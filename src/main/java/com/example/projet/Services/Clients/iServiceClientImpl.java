@@ -1,11 +1,11 @@
 package com.example.projet.Services.Clients;
 
 import com.example.projet.DTO.ClientDTO;
-import com.example.projet.Exceptions.DuplicateEmailException;
-import com.example.projet.Exceptions.DuplicateUsernameException;
-import com.example.projet.Exceptions.UserNotFoundException;
+import com.example.projet.Services.Exceptions.DuplicateEmailException;
+import com.example.projet.Services.Exceptions.DuplicateUsernameException;
+import com.example.projet.Services.Exceptions.UserNotFoundException;
 import com.example.projet.Mappers.ClientDTOConverter;
-import com.example.projet.Models.Client;
+import com.example.projet.Services.Models.Client;
 import com.example.projet.Repositories.ClientRepository;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;

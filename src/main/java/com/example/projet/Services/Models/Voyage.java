@@ -1,4 +1,4 @@
-package com.example.projet.Models;
+package com.example.projet.Services.Models;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;

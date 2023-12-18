@@ -1,7 +1,7 @@
 package com.example.projet.Mappers;
 
 import com.example.projet.DTO.ClientDTO;
-import com.example.projet.Models.Client;
+import com.example.projet.Services.Models.Client;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
