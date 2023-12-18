@@ -1,6 +1,7 @@
 package com.example.projet.Controllers;
 
 import com.example.projet.DTO.TicketDTO;
+import com.example.projet.Models.Ticket;
 import com.example.projet.Services.Clients.iServiceClient;
 import com.example.projet.Services.Tickets.iServiceTicket;
 import com.example.projet.Services.Voyages.iServiceVoyage;
@@ -38,6 +39,11 @@ public class TicketController {
     @GetMapping("/tickets")
     List<TicketDTO> allTickets() {
         return serviceTicket.getAllTickets();
+    }
+
+    @GetMapping("/ticketss")
+    List<Ticket> allTickets1() {
+        return serviceTicket.getAllTickets1();
     }
 
     @GetMapping("/tickets/{id}")

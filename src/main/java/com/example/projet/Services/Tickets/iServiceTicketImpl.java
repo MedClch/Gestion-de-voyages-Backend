@@ -71,6 +71,11 @@ public class iServiceTicketImpl implements iServiceTicket {
     }
 
     @Override
+    public List<Ticket> getAllTickets1() {
+        return ticketRepository.findAll();
+    }
+
+    @Override
     public TicketDTO getTicketById(Long id) {
         Ticket ticket = ticketRepository.findById(id).orElseThrow(() -> new TicketNotFoundException(id));
         return dtoConverter.toTicketDTO(ticket);
