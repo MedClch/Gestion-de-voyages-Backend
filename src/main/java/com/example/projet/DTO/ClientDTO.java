@@ -15,4 +15,3 @@ public class ClientDTO {
     private String username;
     private String email;
 }
-

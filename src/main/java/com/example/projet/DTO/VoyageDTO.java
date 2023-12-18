@@ -18,4 +18,3 @@ public class VoyageDTO {
     private LocalDateTime heurearrivee;
     private Double prix;
 }
-
