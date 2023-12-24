@@ -48,37 +48,57 @@ public class iServiceTicketImpl implements iServiceTicket {
         return false;
     }
 
-    @Override
-    public TicketDTO saveTicket(TicketDTO ticketDTO, Long voyageId, Long clientId) {
-        Voyage voyage = voyageRepository.findById(voyageId).orElse(null);
-        Client client = clientRepository.findById(clientId).orElse(null);
-        if (voyage != null && client != null && !existsByClientAndVoyage(client, voyage)) {
-            Ticket ticket = dtoConverter.toTicket(ticketDTO);
-            ticket.setVoyage(voyage);
-            ticket.setClient(client);
-            Ticket savedTicket = ticketRepository.save(ticket);
-            return dtoConverter.toTicketDTO(savedTicket);
-        } else {
-            return null;
-        }
+    private boolean isValidTicketCreation(Voyage voyage, Client client) {
+        return voyage != null && client != null && !existsByClientAndVoyage(client, voyage);
     }
 
     @Override
-    public List<TicketDTO> getAllTickets() {
+    public TicketDTO saveTicket(TicketDTO ticketDTO, Long voyageId, Long clientId) {
+            Voyage voyage = voyageRepository.findById(voyageId).orElse(null);
+            Client client = clientRepository.findById(clientId).orElse(null);
+            if (isValidTicketCreation(voyage, client)) {
+                Ticket ticket = dtoConverter.toTicket(ticketDTO);
+                ticket.setVoyage(voyage);
+                ticket.setClient(client);
+                Ticket savedTicket = ticketRepository.save(ticket);
+                return dtoConverter.toTicketDTO(savedTicket);
+            } else {
+                return null;
+            }
+//        Voyage voyage = voyageRepository.findById(voyageId).orElse(null);
+//        Client client = clientRepository.findById(clientId).orElse(null);
+//        if (voyage != null && client != null && !existsByClientAndVoyage(client, voyage)) {
+//            Ticket ticket = dtoConverter.toTicket(ticketDTO);
+//            ticket.setVoyage(voyage);
+//            ticket.setClient(client);
+//            Ticket savedTicket = ticketRepository.save(ticket);
+//            return dtoConverter.toTicketDTO(savedTicket);
+//        } else {
+//            return null;
+//        }
+    }
+
+    @Override
+    public List<TicketDTO> getAllTicketsDTO() {
         return ticketRepository.findAll().stream()
                 .map(dtoConverter::toTicketDTO)
                 .toList();
     }
 
     @Override
-    public List<Ticket> getAllTickets1() {
+    public List<Ticket> getAllTickets() {
         return ticketRepository.findAll();
     }
 
     @Override
-    public TicketDTO getTicketById(Long id) {
+    public TicketDTO getTicketDTOById(Long id) {
         Ticket ticket = ticketRepository.findById(id).orElseThrow(() -> new TicketNotFoundException(id));
         return dtoConverter.toTicketDTO(ticket);
+    }
+
+    @Override
+    public Ticket getTicketById(Long id) {
+        return ticketRepository.findById(id).orElseThrow(() -> new TicketNotFoundException(id));
     }
 
     @Transactional
@@ -96,6 +116,21 @@ public class iServiceTicketImpl implements iServiceTicket {
         } else
             return null;
     }
+
+//    @Transactional
+//    @Override
+//    public Ticket updateTicket1(Long id, TicketDTO ticketDTO) {
+//        Optional<Ticket> optionalTicket = ticketRepository.findById(id);
+//        if (optionalTicket.isPresent()) {
+//            Ticket existingTicket1 = optionalTicket.get();
+//            if (ticketDTO.getVoyageId() != null && removeTicketFromVoyage(existingTicket1))
+//                existingTicket1.setVoyage(voyageRepository.findById(ticketDTO.getVoyageId()).orElse(null));
+//            if (ticketDTO.getClientId() != null && removeTicketFromClient(existingTicket1))
+//                existingTicket1.setClient(clientRepository.findById(ticketDTO.getClientId()).orElse(null));
+//            return ticketRepository.save(existingTicket1);
+//        } else
+//            return null;
+//    }
 
     private boolean existsByClientAndVoyage(Client client, Voyage voyage) {
         for (Ticket t : ticketRepository.findAll())
@@ -241,4 +276,5 @@ public class iServiceTicketImpl implements iServiceTicket {
 //            ticketRepository.deleteById(id);
 //        return "Ticket with ID " + id + " has been deleted successfully!";
 //    }
+
 }
