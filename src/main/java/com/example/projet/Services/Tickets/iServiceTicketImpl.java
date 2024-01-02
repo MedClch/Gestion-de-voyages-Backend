@@ -65,17 +65,6 @@ public class iServiceTicketImpl implements iServiceTicket {
             } else {
                 return null;
             }
-//        Voyage voyage = voyageRepository.findById(voyageId).orElse(null);
-//        Client client = clientRepository.findById(clientId).orElse(null);
-//        if (voyage != null && client != null && !existsByClientAndVoyage(client, voyage)) {
-//            Ticket ticket = dtoConverter.toTicket(ticketDTO);
-//            ticket.setVoyage(voyage);
-//            ticket.setClient(client);
-//            Ticket savedTicket = ticketRepository.save(ticket);
-//            return dtoConverter.toTicketDTO(savedTicket);
-//        } else {
-//            return null;
-//        }
     }
 
     @Override
