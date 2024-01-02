@@ -1,4 +1,4 @@
-package com.example.projet.Services.Exceptions;
+package com.example.projet.Exceptions;
 
 public class VoyageNotFoundException extends RuntimeException {
     public VoyageNotFoundException(Long id) {

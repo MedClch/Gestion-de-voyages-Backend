@@ -1,7 +1,7 @@
 package com.example.projet.Mappers;
 
 import com.example.projet.DTO.TicketDTO;
-import com.example.projet.Services.Models.Ticket;
+import com.example.projet.Models.Ticket;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

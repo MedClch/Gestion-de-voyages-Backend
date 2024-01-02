@@ -2,9 +2,9 @@ package com.example.projet.Services.Voyages;
 
 import com.example.projet.DTO.VoyageDTO;
 import com.example.projet.Mappers.VoyageDTOConverter;
-import com.example.projet.Services.Exceptions.DuplicateVoyageException;
-import com.example.projet.Services.Exceptions.VoyageNotFoundException;
-import com.example.projet.Services.Models.Voyage;
+import com.example.projet.Exceptions.DuplicateVoyageException;
+import com.example.projet.Exceptions.VoyageNotFoundException;
+import com.example.projet.Models.Voyage;
 import com.example.projet.Repositories.VoyageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

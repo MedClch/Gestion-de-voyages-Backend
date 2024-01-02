@@ -1,4 +1,4 @@
-package com.example.projet.Services.Exceptions;
+package com.example.projet.Exceptions;
 
 public class TicketNotFoundException extends RuntimeException {
     public TicketNotFoundException(Long id) {

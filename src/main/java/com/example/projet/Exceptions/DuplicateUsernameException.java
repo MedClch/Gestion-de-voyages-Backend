@@ -1,4 +1,4 @@
-package com.example.projet.Services.Exceptions;
+package com.example.projet.Exceptions;
 
 public class DuplicateUsernameException extends RuntimeException {
 
