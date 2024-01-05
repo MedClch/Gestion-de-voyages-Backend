@@ -38,19 +38,16 @@ public class TicketController {
             return ResponseEntity.badRequest().build();
     }
 
+    //!  I'm using this method in the axios.post
     @PostMapping("/savetickett")
     public ResponseEntity<TicketDTO> newTicket1(@RequestBody TicketDTO ticketDTO,
-                                               @RequestParam Long voyageId, @RequestParam Long clientId) {
+                                                @RequestParam Long voyageId, @RequestParam Long clientId) {
         if (voyageId == null || clientId == null)
             return ResponseEntity.badRequest().build();
-
-        // Set the voyageId and clientId in the ticketDTO
         ticketDTO.setVoyageId(voyageId);
         ticketDTO.setClientId(clientId);
-
         if (serviceClient.getClientById(clientId) == null || serviceVoyage.getVoyageById(voyageId) == null)
             return ResponseEntity.badRequest().build();
-
         TicketDTO savedTicketDTO = serviceTicket.saveTicket(ticketDTO, voyageId, clientId);
         if (savedTicketDTO != null)
             return new ResponseEntity<>(savedTicketDTO, HttpStatus.CREATED);
@@ -61,7 +58,7 @@ public class TicketController {
 
     @PostMapping("/addticket")
     public ResponseEntity<TicketDTO> newTicket2(@RequestBody TicketDTO ticketDTO,
-                                               @RequestParam Long voyageId, @RequestParam Long clientId) {
+                                                @RequestParam Long voyageId, @RequestParam Long clientId) {
         if (voyageId == null || clientId == null)
             return ResponseEntity.badRequest().build();
         ClientDTO existingClient = serviceClient.getClientById(clientId);
@@ -84,6 +81,7 @@ public class TicketController {
     List<Ticket> allTickets1() {
         return serviceTicket.getAllTickets();
     }
+
     @GetMapping("/tickets/{id}")
     ResponseEntity<TicketDTO> getTicketByID(@PathVariable Long id) {
         TicketDTO ticketDTO = serviceTicket.getTicketDTOById(id);
@@ -93,9 +91,9 @@ public class TicketController {
 
     @GetMapping("/ticketss/{id}")
     ResponseEntity<Ticket> getTicketByID1(@PathVariable Long id) {
-    Ticket ticket = serviceTicket.getTicketById(id);
+        Ticket ticket = serviceTicket.getTicketById(id);
         return ticket != null ? ResponseEntity.ok(ticket)
-            : ResponseEntity.notFound().build();
+                : ResponseEntity.notFound().build();
     }
 
     //! this method returns a ticketDTO
